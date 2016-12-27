@@ -25,7 +25,8 @@ module Spree
     end
 
     def self.validate_dotpay_notification(params)
-      txt_hash = 'FWO9ShaOkf861BRSIPF34mpbDRuFB3ep'+
+    
+      txt_hash = preferences[:merchant_pin]+
           params['id'].to_s+
           params['operation_number'].to_s+
           params['operation_type'].to_s+
