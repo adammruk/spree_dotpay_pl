@@ -15,9 +15,12 @@ module SpreeDotpayPl
       end
     end
 
+    initializer "blorgh.assets.precompile" do |app|
+      app.config.assets.precompile += %w( chanel_logos.jpg dotpay_b3_160x83.gif dotpay_b9_145x252 )
+    end
+
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
       app.config.spree.payment_methods << Spree::PaymentMethod::DotpayPl
-      app.config.assets.precompile += %w( chanel_logos.jpg dotpay_b3_160x83.gif dotpay_b9_145x252 )
 
     end
 
