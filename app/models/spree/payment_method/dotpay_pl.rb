@@ -26,10 +26,10 @@ module Spree
 
     def self.validate_dotpay_notification(params)
 
-      order = Spree::Order.find_by_number(params[:control])
+      order = Spree::Order.find_by_number(params['control'])
 
       if order
-
+          puts "==== order find: #{order.inspect}"
           merchant_pin = order.get_dotpay_payment.payment_method.preferences[:merchant_pin]
 
           txt_hash = merchant_pin+
@@ -60,8 +60,10 @@ module Spree
               params['geoip_country'].to_s
 
               calculated = Digest::SHA256.hexdigest txt_hash
-            
-          if calculated != params[:signature]
+              puts "==== caculated chk: #{calculated}"
+              puts "==== from hash chk: #{params['signature']}"
+              puts "==== comparsion: #{calculated == params['signature'] }"
+          if calculated != params['signature']
             return nil
           else
             return order
