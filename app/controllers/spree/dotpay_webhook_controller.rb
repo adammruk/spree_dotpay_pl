@@ -10,7 +10,10 @@ module Spree
       order = PaymentMethod::DotpayPl.validate_dotpay_notification(params)
 
       if order && payment = order.get_dotpay_payment
-        payment.capture!
+        if params[:operation_status] == 'completed'
+          payment.capture!
+        end
+
         render json: "OK"
       else
         head :forbidden
